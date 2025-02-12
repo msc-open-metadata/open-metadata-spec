@@ -1,0 +1,69 @@
+{
+    
+    "udf":    
+        {
+            "type": "record",
+            "name": "udf",
+            "args": [
+                { "name": "name", "type": "string" },
+                { "name": "function", "type": "string" },
+                { "name": "parameters", "type": { "type": "array", "items": "string" } },
+                { "name": "return_type", "type": "string"},
+                { "name": "type", "type":  ["null", "string"], "default": null },
+                { "name": "null_handling", "type": ["null", "string"], "default": null},
+                { "name": "exception_handling", "type": ["null", "string"], "default": null },
+                { "name": "side_effects", "type": ["null", "bool"], "default": null}
+            ],
+            "fields": [
+                { "name": "database_name", "type": "string" },
+                { "name": "database_oid", "type": "string" },
+                { "name": "schema_name", "type": "string" },
+                { "name": "function_name", "type": "string" },
+                { "name": "function_type", "type": "string" },
+                { "name": "description", "type":  ["null", "string"], "default": null},
+                { "name": "comment", "type":  ["null", "string"], "default": null  },
+                { "name": "tags", "type": { "type": "map", "values": "string" } },
+                { "name": "return_type", "type":  ["null", "string"], "default": null  },
+                { "name": "parameters", "type": { "type": "array", "items": "string" } },
+                { "name": "parameter_types", "type": { "type": "array", "items": "string" } },
+                { "name": "varargs", "type":  ["null", "string"], "default": null  },
+                { "name": "macro_definition", "type":  ["null", "string"], "default": null  },
+                { "name": "has_side_effects", "type": "boolean" },
+                { "name": "internal", "type": "boolean" },
+                { "name": "function_oid", "type": "string" },
+                { "name": "example", "type":  ["null", "string"], "default": null  },
+                { "name": "stability", "type":  ["null", "string"], "default": null }
+            ]
+        },
+    "function":
+        {
+            "type": "record",
+            "name": "function",
+            "args": [
+                {"name": "name", "type": "string"},
+                {"name": "parameters", "type":  ["null", "string"], "default": null },
+                {"name": "macro text", "type": "string"}
+            ],
+            "fields": [
+                { "name": "database_name", "type": "string" },
+                { "name": "database_oid", "type": "string" },
+                { "name": "schema_name", "type": "string" },
+                { "name": "function_name", "type": "string" },
+                { "name": "function_type", "type": "string" },
+                { "name": "description", "type":  ["null", "string"], "default": null  },
+                { "name": "comment", "type":  ["null", "string"], "default": null  },
+                { "name": "tags", "type": { "type": "map", "values": "string" } },
+                { "name": "return_type", "type":  ["null", "string"], "default": null  },
+                { "name": "parameters", "type": { "type": "array", "items": "string" } },
+                { "name": "parameter_types", "type": { "type": "array", "items": "string" } },
+                { "name": "varargs", "type":  ["null", "string"], "default": null  },
+                { "name": "macro_definition", "type":  ["null", "string"], "default": null  },
+                { "name": "has_side_effects", "type": "boolean" },
+                { "name": "internal", "type": "boolean" },
+                { "name": "function_oid", "type": "string" },
+                { "name": "example", "type":  ["null", "string"], "default": null  },
+                { "name": "stability", "type":  ["null", "string"], "default": null  }
+            ]
+        }
+    
+}
