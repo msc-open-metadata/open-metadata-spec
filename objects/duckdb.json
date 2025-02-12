@@ -5,14 +5,14 @@
             "type": "record",
             "name": "udf",
             "args": [
-                { "name": "name", "type": "string" },
-                { "name": "function", "type": "string" },
-                { "name": "parameters", "type": { "type": "array", "items": "string" } },
-                { "name": "return_type", "type": "string"},
-                { "name": "type", "type":  ["null", "string"], "default": null },
-                { "name": "null_handling", "type": ["null", "string"], "default": null},
-                { "name": "exception_handling", "type": ["null", "string"], "default": null },
-                { "name": "side_effects", "type": ["null", "bool"], "default": null}
+                { "name": "name", "type": "string", "doc":  "A string representing the unique name of the UDF within the connection catalog" },
+                { "name": "function", "type": "string", "doc": "The Python function you wish to register as a UDF." },
+                { "name": "parameters", "type": ["string"], "doc": "Scalar functions can operate on one or more columns. This parameter takes a list of column types used as input."},
+                { "name": "return_type", "type": "string", "doc": "Scalar functions return one element per row. This parameter specifies the return type of the function."}, 
+                { "name": "type", "type":  ["null", "string"], "default": null, "doc": "(optional): DuckDB supports both built-in Python types and PyArrow Tables. By default, built-in types are assumed, but you can specify type = 'arrow' to use PyArrow Tables" },
+                { "name": "null_handling", "type": ["null", "string"], "default": null, "doc": " (optional): By default, NULL values are automatically handled as NULL-in NULL-out. Users can specify a desired behavior for NULL values by setting null_handling = 'special'."},
+                { "name": "exception_handling", "type": ["null", "string"], "default": null, "doc":"(optional): By default, when an exception is thrown from the Python function, it will be re-thrown in Python. Users can disable this behavior, and instead return NULL, by setting this parameter to 'return_null'" },
+                { "name": "side_effects", "type": ["null", "bool"], "default": null, "doc": " (optional): By default, functions are expected to produce the same result for the same input. If the result of a function is impacted by any type of randomness, side_effects must be set to True."}
             ],
             "fields": [
                 { "name": "database_name", "type": "string", "doc": "The name of the database that contains this function." },
@@ -40,9 +40,9 @@
             "type": "record",
             "name": "function",
             "args": [
-                {"name": "name", "type": "string"},
-                {"name": "parameters", "type":  ["null", "string"], "default": null },
-                {"name": "macro text", "type": "string"}
+                {"name": "name", "type": "string", "doc": "name of the macro"},
+                {"name": "parameters", "type":  ["null", "string"], "default": null, "doc": "optionally parameters within a set of parentheses" },
+                {"name": "macro text", "type": "string", "doc": "the text of the macro (Carl note: after create macro... as..  - so the actual logic)"}
             ],
             "fields": [
                 { "name": "database_name", "type": "string", "doc": "The name of the database that contains this function." },
