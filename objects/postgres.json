@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "Function",
+  "args": [
+    { "name": "name", "type": "string" }
+  ],
+  "fields": [
+    { "name": "name", "type": "string" }
+  ]
+}
