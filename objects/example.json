@@ -1,6 +1,7 @@
 {
   "type": "record",
   "name": "Function",
+  "args": {},
   "fields": [
     { "name": "name", "type": "string" },
     { "name": "schema", "type": "string" },
