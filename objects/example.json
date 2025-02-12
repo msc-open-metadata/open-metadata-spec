@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "Function",
+  "fields": [
+    { "name": "name", "type": "string" },
+    { "name": "schema", "type": "string" },
+    { "name": "database", "type": "string" },
+    { "name": "owner", "type": "string" },
+    { "name": "language", "type": "string" },
+    { "name": "return_type", "type": "string" },
+    { "name": "definition", "type": "string" },
+    { "name": "created_at", "type": "string" },
+    { "name": "updated_at", "type": "string" },
+    { "name": "parameters", "type": { "type": "array", "items": "string" } }
+  ]
+}
