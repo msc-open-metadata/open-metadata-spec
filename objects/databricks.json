@@ -2,7 +2,7 @@
   "Function": {
     "type": "record",
     "name": "Function",
-    "doc": "",
+    "doc": "Fields ref: https://docs.databricks.com/en/sql/language-manual/information-schema/routines.html",
     "args": [
       { "name": "function_name", "type": "string", "doc": "The name of the function, optionally qualified with a schema." },
       {
@@ -45,15 +45,40 @@
       { "name": "sql_access", "type": "enum", "default": "derived", "doc": "Specifies if the function reads SQL data. CONTAINS SQL or READS SQL DATA" }
     ],
     "fields": [
-      { "name": "function", "type": "string", "doc": "Name of the function. Example: default.dice" },
-      { "name": "type", "type": "enum", "doc": "Type of the function. SCALAR, UDF..." },
-      { "name": "input", "type": ["array"], "items": "(string, string)", "doc": "input parameters. Example: n INT" },
-      { "name": "returns", "type": ["array"], "items": "string", "doc": "Return type. Example: INT" },
-      { "name": "comment", "type": "string", "doc": "Custom description. Example: An n-sided dice" },
-      { "name": "deterministic", "type": "boolean", "doc": "Specifies whether the function always returns the same result for given inputs." },
-      { "name": "owner", "type": "string", "doc": "The user that the function belongs to" },
-      { "name": "create_time", "type": "string", "doc": "Time of creation. Example: Fri Apr 16 10:00:00 PDT 2021" },
-      { "name": "body", "type": "string", "doc": "The function body/definition. Example: floor((rand() * n) + 1)" }
-    ]
+        { "name": "specific_catalog", "type": "string", "doc": "Catalog containing the routine." },
+        { "name": "specific_schema", "type": "string", "doc": "Database (schema) containing the routine." },
+        { "name": "specific_name", "type": "string", "doc": "Schema unique (specific) name of the routine." },
+        { "name": "routine_catalog", "type": "string", "doc": "Matches specific_catalog." },
+        { "name": "routine_schema", "type": "string", "doc": "Matches specific_schema." },
+        { "name": "routine_name", "type": "string", "doc": "Name of the routine." },
+        { "name": "routine_type", "type": "string", "doc": "Always 'FUNCTION'. Reserved for future use." },
+        { "name": "data_type", "type": "string", "doc": "The result data type name, or 'TABLE' for a table valued function." },
+        { "name": "full_data_type", "type": "string", "doc": "The result data type definition, for example 'DECIMAL(10, 4)'." },
+        { "name": "character_maximum_length", "type": ["null", "integer"], "default":"null", "doc": "Always NULL, reserved for future use." },
+        { "name": "character_octet_length", "type": ["null","string"], "default":"null", "doc": "Always NULL, reserved for future use." },
+        { "name": "numeric_precision", "type": ["null", "integer"], "doc": "For base-2 integral numeric types, FLOAT, and DOUBLE, the number of supported bits. For DECIMAL the number of digits, NULL otherwise." },
+        { "name": "numeric_precision_radix", "type": ["null", "integer"], "doc": "For DECIMAL 10, for all other numeric types 2, NULL otherwise." },
+        { "name": "numeric_scale", "type": ["null", "integer"], "doc": "For integral numeric types 0, for DECIMAL the number of digits to the right of the decimal point, NULL otherwise." },
+        { "name": "datetime_precision", "type": ["null", "integer"], "doc": "For DATE 0, for TIMESTAMP, and INTERVAL … SECOND 3, any other INTERVAL 0, NULL otherwise." },
+        { "name": "interval_type", "type": ["null","string"], "doc": "For INTERVAL the unit portion of the interval, e.g. 'YEAR TO MONTH', NULL otherwise." },
+        { "name": "interval_precision", "type": ["null", "integer"], "doc": "Always NULL, reserved for future use." },
+        { "name": "maximum_cardinality", "type": ["null", "integer"], "doc": "Always NULL, reserved for future use." },
+        { "name": "routine_body", "type": "string", "doc": "'SQL' or 'PYTHON'." },
+        { "name": "routine_definition", "type":  ["null", "string"], "doc": "The full definition of the routine. NULL if the user is not the owner." },
+        { "name": "external_name", "type": ["null", "string"], "doc": "Always NULL, reserved for future use." },
+        { "name": "external_language", "type": ["null", "string"], "doc": "Always NULL, reserved for future use." },
+        { "name": "parameter_style", "type": ["null", "string"], "doc": "'SQL', reserved for future use." },
+        { "name": "is_deterministic", "type": "string", "doc": "'YES' if routine defined as deterministic, 'NO' otherwise." },
+        { "name": "sql_data_access", "type": "string", "doc": "'READS SQL DATA' if routine reads from a relation, 'CONTAINS SQL' otherwise." },
+        { "name": "is_null_call", "type": "string", "doc": "Always 'YES', reserved for future use." },
+        { "name": "sql_path", "type": ["null", "string"], "doc": "Always NULL, reserved for future use." },
+        { "name": "security_type", "type": "string", "doc": "Always 'DEFINER', reserved for future use." },
+        { "name": "as_locator", "type": "string", "doc": "Always 'NO', reserved for future use." },
+        { "name": "comment", "type": ["null", "string"], "doc": "An optional comment describing the routine." },
+        { "name": "created", "type": "timestamp", "doc": "Timestamp when the routine was created." },
+        { "name": "created_by", "type": "string", "doc": "Principal which created the routine." },
+        { "name": "last_altered", "type": "timestamp", "doc": "Timestamp when the routine definition was last altered in any way." },
+        { "name": "last_altered_by", "type": "string", "doc": "Principal which last altered the routine." }
+      ]
   }
 }
