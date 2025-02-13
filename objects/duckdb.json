@@ -7,7 +7,7 @@
             "args": [
                 { "name": "name", "type": "string", "doc":  "A string representing the unique name of the UDF within the connection catalog" },
                 { "name": "function", "type": "string", "doc": "The Python function you wish to register as a UDF." },
-                { "name": "parameters", "type": ["string"], "doc": "Scalar functions can operate on one or more columns. This parameter takes a list of column types used as input."},
+                { "name": "parameters", "type":  ["null", "string"], "default": null, "doc": "Scalar functions can operate on one or more columns. This parameter takes a list of column types used as input."},
                 { "name": "return_type", "type": "string", "doc": "Scalar functions return one element per row. This parameter specifies the return type of the function."}, 
                 { "name": "type", "type":  ["null", "string"], "default": null, "doc": "(optional): DuckDB supports both built-in Python types and PyArrow Tables. By default, built-in types are assumed, but you can specify type = 'arrow' to use PyArrow Tables" },
                 { "name": "null_handling", "type": ["null", "string"], "default": null, "doc": " (optional): By default, NULL values are automatically handled as NULL-in NULL-out. Users can specify a desired behavior for NULL values by setting null_handling = 'special'."},
