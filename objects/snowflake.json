@@ -193,7 +193,14 @@
                 {"name": "ROLE_TYPE", "type": "string", "default": null, "doc": "N/A"},
                 {"name": "ROLE_DATABASE_NAME", "type": ["null", "string"], "default": null, "doc": "N/A"},
                 {"name": "ROLE_INSTANCE_ID", "type": ["null", "integer"], "default": null, "doc": "N/A"},
-                {"name": "OWNER_ROLE_TYPE", "type": "string", "default": null, "doc": "N/A"}
+                {"name": "OWNER_ROLE_TYPE", "type": "string", "default": null, "doc": "N/A"},
+
+                {"name": "IS_DEFAULT", "type": "boolean", "default": null, "doc": "N/A"},
+                {"name": "IS_CURRENT", "type": "boolean", "default": null, "doc": "N/A"},
+                {"name": "IS_INHERITED", "type": "boolean", "default": null, "doc": "N/A"},
+                {"name": "ASSIGNED_TO_USERS", "type": "integer", "default": null, "doc": "N/A"},
+                {"name": "GRANTED_TO_ROLES", "type": "integer", "default": null, "doc": "N/A"},
+                {"name": "GRANTED_ROLES", "type": "integer", "default": null, "doc": "N/A"}
             ]
         }                   
     }
