@@ -1,10 +1,136 @@
 {
-  "type": "record",
-  "name": "Function",
-  "args": [
-    { "name": "name", "type": "string" }
-  ],
-  "fields": [
-    { "name": "name", "type": "string" }
-  ]
+  "Function": {
+    "type": "record",
+    "name": "Function",
+    "doc": "args: https://www.postgresql.org/docs/current/sql-createfunction.html, fields: https://www.postgresql.org/docs/current/catalog-pg-proc.html",
+    "args": [
+      { "name": "name", "type": "string", "doc": "The name of the function." },
+      {
+        "name": "parameters",
+        "type": "array",
+        "items": [
+          { "name": "argmode", "type": ["null", "enum"], "default": "IN", "doc": "Argument mode: IN, OUT, INOUT, VARIADIC." },
+          { "name": "argname", "type": "string", "doc": "Name of the argument." },
+          { "name": "argtype", "type": "string", "doc": "Data type of the argument." },
+          { "name": "default_expr", "type": ["null", "string"], "default": "null", "doc": "Default value for the argument." }
+        ]
+      },
+      { "name": "rettype", "type": ["null", "string"], "default": "null", "doc": "The return data type of the function." },
+      {
+        "name": "return_table",
+        "type": ["null", "array"],
+        "default": ["null"],
+        "items": [
+          { "name": "column_name", "type": "string", "doc": "The name of the output column." },
+          { "name": "column_type", "type": "string", "doc": "The data type of the output column." }
+        ]
+      },
+      { "name": "lang_name", "type": "string", "doc": "The implementation language of the function." },
+      { "name": "transform", "type": ["array"], "items": "string", "default": [], "doc": "Transforms a call to the function should apply" },
+      { "name": "window", "type": "boolean", "default": false, "doc": "Indicates if the function is a window function." },
+      { "name": "volatility", "type": "enum", "default": "VOLATILE", "doc": "The volatility of the function (IMMUTABLE, STABLE, VOLATILE)." },
+      { "name": "leakproof", "type": "string", "default": "NOT", "doc": "Indicates if the function has side effects." },
+      {
+        "name": "null_input_behavior",
+        "type": "enum",
+        "default": "CALLED ON NULL INPUT",
+        "doc": "Behavior for NULL inputs (CALLED ON NULL INPUT, RETURNS NULL ON NULL INPUT, STRICT)."
+      },
+      { "name": "security", "type": "enum", "default": "SECURITY INVOKE", "doc": "Priveleges to execute with (SECURITY INVOKER, SECURITY DEFINER)." },
+      { "name": "parallel", "type": "enum", "default": "PARALLEL UNSAFE", "doc": "Parallel execution safety (UNSAFE, RESTRICTED, SAFE)." },
+      { "name": "execution_cost", "type": ["number"], "default": 1, "doc": "The estimated execution cost of the function." },
+      { "name": "result_rows", "type": ["number"], "default": 1000, "doc": "Estimated number of rows returned by the function." },
+      { "name": "support_function", "type": ["null", "string"], "default": "null", "doc": "The name of the planner support function." },
+      {
+        "name": "set_config",
+        "type": ["null", "array"],
+        "items": [
+          { "name": "parameter", "type": "string", "doc": "The configuration parameter to set." },
+          { "name": "value", "type": "string", "doc": "The value for the configuration parameter." }
+        ],
+        "default": "null",
+        "doc": "The name of the planner support function."
+      },
+      { "name": "definition", "type": ["null", "string"], "doc": "The function definition." },
+      { "name": "object_file", "type": ["null", "string"], "default": "null", "doc": "The path to the object file for C functions." },
+      { "name": "link_symbol", "type": ["null", "string"], "default": "{func_name}", "doc": "The name of the function in the C language source code" },
+      { "name": "sql_body", "type": ["null", "string"], "doc": "The SQL body of the function." }
+    ],
+    "fields": [
+      { "name": "oid", "type": "int", "doc": "Row identifier" },
+      { "name": "proname", "type": "string", "doc": "Name of the function" },
+      { "name": "pronamespace", "type": "int", "doc": "Namespace OID" },
+      { "name": "proowner", "type": "int", "doc": "Owner OID" },
+      { "name": "prolang", "type": "int", "doc": "Implementation language OID" },
+      { "name": "procost", "type": "float", "doc": "Execution cost" },
+      { "name": "prorows", "type": "float", "doc": "Estimated number of result rows" },
+      { "name": "provariadic", "type": "int", "doc": "Variadic parameter type OID" },
+      { "name": "prosupport", "type": "int", "doc": "Support function OID" },
+      { "name": "prokind", "type": "string", "doc": "Function kind (f, p, a, w)" },
+      { "name": "prosecdef", "type": "boolean", "doc": "Security definer flag" },
+      { "name": "proleakproof", "type": "boolean", "doc": "Leak-proof flag" },
+      { "name": "proisstrict", "type": "boolean", "doc": "Strict function flag" },
+      { "name": "proretset", "type": "boolean", "doc": "Returns a set flag" },
+      { "name": "provolatile", "type": "string", "doc": "Volatility (i, s, v)" },
+      { "name": "proparallel", "type": "string", "doc": "Parallel safety (s, r, u)" },
+      { "name": "pronargs", "type": "int", "doc": "Number of input arguments" },
+      { "name": "pronargdefaults", "type": "int", "doc": "Number of arguments with defaults" },
+      { "name": "prorettype", "type": "int", "doc": "Return type OID" },
+      { "name": "proargtypes", "type": "array", "items": "int", "doc": "Input argument type OIDs" },
+      { "name": "proallargtypes", "type": ["null", "array"], "items": "int", "doc": "All argument type OIDs" },
+      { "name": "proargmodes", "type": ["null", "array"], "items": "string", "doc": "Argument modes" },
+      { "name": "proargnames", "type": ["null", "array"], "items": "string", "doc": "Argument names" },
+      { "name": "proargdefaults", "type": ["null", "string"], "doc": "Default values expression tree" },
+      {
+        "name": "protrftypes",
+        "type": ["null", "array"],
+        "items": "int",
+        "doc": "Transform argument/result type OIDs"
+      },
+      { "name": "prosrc", "type": "string", "doc": "Function source code or identifier" },
+      { "name": "probin", "type": ["null", "string"], "doc": "Additional execution info" },
+      { "name": "prosqlbody", "type": ["null", "string"], "doc": "Pre-parsed SQL function body" },
+      { "name": "proconfig", "type": ["null", "array"], "items": "string", "doc": "Run-time configuration settings" },
+      { "name": "proacl", "type": ["null", "array"], "items": "string", "doc": "Access privileges" }
+    ]
+  },
+  "User": {
+    "type": "record",
+    "name": "User",
+    "doc": "args: https://www.postgresql.org/docs/current/sql-createrole.html, fields: https://www.postgresql.org/docs/current/catalog-pg-authid.html",
+    "args": [
+      { "name": "name", "type": "string", "doc": "The name of the user." },
+      { "name": "superuser", "type": "boolean", "default": false, "doc": "Indicates if the user is a superuser." },
+      { "name": "createdb", "type": "boolean", "default": false, "doc": "Indicates if the user can create databases." },
+      { "name": "createrole", "type": "boolean", "default": false, "doc": "Indicates if the user can create other roles." },
+      { "name": "inherit", "type": "boolean", "default": true, "doc": "Indicates if the user inherits privileges." },
+      { "name": "login", "type": "boolean", "default": true, "doc": "Indicates if the user can log in." },
+      { "name": "replication", "type": "boolean", "default": false, "doc": "Indicates if the user can connect in replication mode." },
+      { "name": "bypassrls", "type": "boolean", "default": false, "doc": "Indicates if the role bypasses row-level security policies." },
+      { "name": "connection_limit", "type": "int", "default": -1, "doc": "The maximum number of concurrent connections for the role." },
+      { "name": "password", "type": ["null", "string"], "default": null, "doc": "The password for the user." },
+      { "name": "valid_until", "type": ["null", "string"], "default": null, "doc": "Expiration timestamp for the password." },
+      {
+        "name": "membership",
+        "type": ["null", "array"],
+        "default": null,
+        "items": [
+          { "name": "role_name", "type": "string", "doc": "Role name being granted." },
+          { "name": "option", "type": "string", "doc": "Membership option: IN ROLE, ROLE, ADMIN." }
+        ],
+        "doc": "Defines role memberships and their options."
+      }
+    ],
+    "fields": [
+      { "name": "username", "type": "string", "doc": "The name of the user" },
+      { "name": "usesysid", "type": "int", "doc": "OID of this user" },
+      { "name": "usecreatedb", "type": "boolean", "doc": "User can create databases" },
+      { "name": "usesuper", "type": "boolean", "doc": "User is a superuser" },
+      { "name": "userepl", "type": "boolean", "doc": "User can initiate streaming replication and put the system in and out of backup mode" },
+      { "name": "usebypassrls", "type": "boolean", "doc": "User bypasses every row-level security policy" },
+      { "name": "passwd", "type": "string", "doc": "Not the password (always reads as ********)" },
+      { "name": "valuntil", "type": ["null", "string"], "doc": "Password expiry time (only used for password authentication)" },
+      { "name": "useconfig", "type": ["null", "array"], "items": "string", "default": "null", "doc": "Session defaults for run-time configuration variables" }
+    ]
+  }
 }
