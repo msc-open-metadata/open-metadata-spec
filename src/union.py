@@ -1,5 +1,5 @@
 import json
-from collections import OrderedDict, defaultdict
+from collections import defaultdict
 from enum import Enum
 
 
@@ -11,7 +11,7 @@ class MetadataObject(Enum):
 class UnionSpec:
     def __init__(
         self,
-        obj:str,
+        obj: str,
         *,
         req_args: dict[str, tuple[list, str]],
         opt_args: dict[str, tuple[list, str]],
@@ -57,9 +57,9 @@ class UnionSpec:
 
     def __str__(self):
         return f"""UnionSpec {self.obj}:
-        {"Required Args":<25}: {len(self.req_args):>5} ({list(self.req_args.keys())[:3]}, and {len(self.req_args)-3} more)
-        {"Optional Args":<25}: {len(self.opt_args):>5} ({list(self.opt_args.keys())[:3]}, and {len(self.opt_args)-3} more)
-        {"Fields":<25}: {len(self.fields):>5} ({list(self.fields.keys())[:3]}, and {len(self.fields)-3} more)
+        {"Required Args":<25}: {len(self.req_args):>5} ({list(self.req_args.keys())[:3]}, and {len(self.req_args) - 3} more)
+        {"Optional Args":<25}: {len(self.opt_args):>5} ({list(self.opt_args.keys())[:3]}, and {len(self.opt_args) - 3} more)
+        {"Fields":<25}: {len(self.fields):>5} ({list(self.fields.keys())[:3]}, and {len(self.fields) - 3} more)
         {"Arg Repeats":<25}: {len(self.arg_repeats):>5} ({list(self.arg_repeats.keys())[:3]}...)
         {"Field Repeats":<25}: {len(self.field_repeats):>5} ({list(self.field_repeats.keys())[:3]}...)
         """
@@ -74,7 +74,7 @@ class UnionSpec:
 
 def union_spec(obj: MetadataObject, systems: set[str]):
     print("Producing object spec as union over:")
-    union_spec = UnionSpec("Function",req_args=dict(), opt_args=dict(), fields=dict())
+    union_spec = UnionSpec("Function", req_args=dict(), opt_args=dict(), fields=dict())
 
     for s in systems:
         with open(f"objects/{s}.json") as f:
@@ -111,12 +111,7 @@ def union_spec(obj: MetadataObject, systems: set[str]):
 
 
 if __name__ == "__main__":
-    function_systems = {
-        "databricks",
-        "duckdb",
-        "postgres",
-        "unitycatalog",
-    }
+    function_systems = {"databricks", "duckdb", "postgres", "unitycatalog", "snowflake"}
     function_spec = union_spec(MetadataObject.FUNCTION, function_systems)
 
     function_spec.print_req_args()
