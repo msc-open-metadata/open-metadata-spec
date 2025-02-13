@@ -1,0 +1,59 @@
+{
+  "Function": {
+    "type": "record",
+    "name": "Function",
+    "doc": "",
+    "args": [
+      { "name": "function_name", "type": "string", "doc": "The name of the function, optionally qualified with a schema." },
+      {
+        "name": "parameters",
+        "type": "array",
+        "items": [
+          { "name": "parameter_name", "type": "string", "doc": "The parameter name must be unique within the function." },
+          { "name": "data_type", "type": "string", "doc": "Any supported data type." },
+          { "name": "default_expression", "type": ["null", "string"], "default": "null", "doc": "Optional default value, only supported for LANGUAGE SQL." },
+          { "name": "comment", "type": ["null", "string"], "default": "null", "doc": "Optional description." }
+        ]
+      },
+      {
+        "name": "returns_data_type",
+        "type": ["null", "string"],
+        "default": "null",
+        "doc": "The return data type of the function. For SQL optional. For Python required"
+      },
+      {
+        "name": "returns_table",
+        "type": ["null", "array"],
+        "default": ["null"],
+        "doc": "This clause marks the function as a table function. LANGUAGE SQL",
+        "items": [
+          { "name": "column_name", "type": ["null", "string"], "default": "null", "doc": "The name of the output column. If null, derived from body" },
+          { "name": "data_type", "type": ["null", "string"], "default": "null", "doc": "The data type of the output column. If null, derived from body" },
+          { "name": "comment", "type": ["null", "string"], "default": "null", "doc": "Optional description." }
+        ]
+      },
+      { "name": "definition", "type": ["null", "string"], "doc": "Defines the function body as an expression or query. SQL function" },
+      { "name": "dollar_quoted_definition", "type": ["null", "string"], "doc": "Defines the function body as an expression or query. Python function" },
+      { "name": "language", "type": "enum", "doc": "The language of the function implementation. SQL or PYTHON." },
+      {
+        "name": "deterministic",
+        "type": "boolean",
+        "default": "derived",
+        "doc": "Specifies whether the function always returns the same result for given inputs."
+      },
+      { "name": "function_comment", "type": "string", "default": "", "doc": "Optional function description." },
+      { "name": "sql_access", "type": "enum", "default": "derived", "doc": "Specifies if the function reads SQL data. CONTAINS SQL or READS SQL DATA" }
+    ],
+    "fields": [
+      { "name": "function", "type": "string", "doc": "Name of the function. Example: default.dice" },
+      { "name": "type", "type": "enum", "doc": "Type of the function. SCALAR, UDF..." },
+      { "name": "input", "type": ["array"], "items": "(string, string)", "doc": "input parameters. Example: n INT" },
+      { "name": "returns", "type": ["array"], "items": "string", "doc": "Return type. Example: INT" },
+      { "name": "comment", "type": "string", "doc": "Custom description. Example: An n-sided dice" },
+      { "name": "deterministic", "type": "boolean", "doc": "Specifies whether the function always returns the same result for given inputs." },
+      { "name": "owner", "type": "string", "doc": "The user that the function belongs to" },
+      { "name": "create_time", "type": "string", "doc": "Time of creation. Example: Fri Apr 16 10:00:00 PDT 2021" },
+      { "name": "body", "type": "string", "doc": "The function body/definition. Example: floor((rand() * n) + 1)" }
+    ]
+  }
+}

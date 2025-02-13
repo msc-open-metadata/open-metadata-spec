@@ -1,0 +1,83 @@
+{
+  "Function": {
+    "type": "record",
+    "name": "Function",
+    "doc": "field src: https://github.com/unitycatalog/unitycatalog/blob/main/api/Models/FunctionInfo.md",
+    "args": [
+      { "name": "full_name", "type": "string", "doc": "Full name of function in the form of catalog_name.schema_name.function_name." },
+      { "name": "input_params", "type": "string", "doc": "Input parameters." },
+      { "name": "data_type", "type": "string", "doc": "Return data type." },
+      { "name": "comment", "type": ["null", "string"], "default": "null", "doc": "User-provided free-form text description." },
+      { "name": "def", "type": "string", "doc": "The routine definition of the function." },
+      { "name": "language", "type": ["null", "string"], "default": null, "doc": "External language of the function." }
+    ],
+    "fields": [
+      { "name": "name", "type": "string", "doc": "Name of function, relative to parent schema." },
+      { "name": "catalog_name", "type": "string", "doc": "Name of parent catalog." },
+      { "name": "schema_name", "type": "string", "doc": "Name of parent schema relative to its parent catalog." },
+      {
+        "name": "input_params",
+        "type": "array",
+        "items": [
+          { "name": "name", "type": ["null", "string"], "default": null, "doc": "Name of parameter." },
+          { "name": "type_text", "type": ["null", "string"], "default": null, "doc": "Full data type spec, SQL/catalogString text." },
+          { "name": "type_json", "type": ["null", "string"], "default": null, "doc": "Full data type spec, JSON-serialized." },
+          { "name": "type_name", "type": ["null", "string"], "default": null },
+          { "name": "type_precision", "type": ["null", "int"], "default": null, "doc": "Digits of precision; required on Create for DecimalTypes." },
+          { "name": "type_scale", "type": ["null", "int"], "default": null, "doc": "Digits to right of decimal; Required on Create for DecimalTypes." },
+          { "name": "type_interval_type", "type": ["null", "string"], "default": null, "doc": "Format of IntervalType." },
+          { "name": "position", "type": ["null", "int"], "default": null, "doc": "Ordinal position of column (starting at position 0)." },
+          { "name": "parameter_mode", "type": ["null", "string"], "default": null },
+          { "name": "parameter_type", "type": ["null", "string"], "default": null },
+          { "name": "parameter_default", "type": ["null", "string"], "default": null, "doc": "Default value of the parameter." },
+          { "name": "comment", "type": ["null", "string"], "default": null, "doc": "User-provided free-form text description." }
+        ],
+        "doc": "Input parameters."
+      },
+      { "name": "data_type", "type": "string", "doc": "Return data type." },
+      { "name": "full_data_type", "type": "string", "doc": "Pretty printed function data type." },
+      {
+        "name": "return_params",
+        "type": "array",
+        "items": [
+          { "name": "name", "type": ["null", "string"], "default": null, "doc": "Name of parameter." },
+          { "name": "type_text", "type": ["null", "string"], "default": null, "doc": "Full data type spec, SQL/catalogString text." },
+          { "name": "type_json", "type": ["null", "string"], "default": null, "doc": "Full data type spec, JSON-serialized." },
+          { "name": "type_name", "type": ["null", "string"], "default": null },
+          { "name": "type_precision", "type": ["null", "int"], "default": null, "doc": "Digits of precision; required on Create for DecimalTypes." },
+          { "name": "type_scale", "type": ["null", "int"], "default": null, "doc": "Digits to right of decimal; Required on Create for DecimalTypes." },
+          { "name": "type_interval_type", "type": ["null", "string"], "default": null, "doc": "Format of IntervalType." },
+          { "name": "position", "type": ["null", "int"], "default": null, "doc": "Ordinal position of column (starting at position 0)." },
+          { "name": "parameter_mode", "type": ["null", "string"], "default": null },
+          { "name": "parameter_type", "type": ["null", "string"], "default": null },
+          { "name": "parameter_default", "type": ["null", "string"], "default": null, "doc": "Default value of the parameter." },
+          { "name": "comment", "type": ["null", "string"], "default": null, "doc": "User-provided free-form text description." }
+        ],
+        "doc": "Return parameters."
+      },
+      {
+        "name": "routine_body",
+        "type": "string",
+        "doc": "Function language. When EXTERNAL is used, specify external_language, and sql_data_access must be NO_SQL."
+      },
+      { "name": "routine_definition", "type": "string", "doc": "Function body." },
+      { "name": "routine_dependencies", "type": "array", "items": "FunctionDependency", "doc": "Dependencies of the function. Functions/tables" },
+      { "name": "parameter_style", "type": "string", "default": "S", "doc": "Function parameter style. 'S' is the value for SQL." },
+      { "name": "is_deterministic", "type": "boolean", "doc": "Whether the function is deterministic." },
+      { "name": "sql_data_access", "type": "string", "doc": "Function SQL data access." },
+      { "name": "is_null_call", "type": "boolean", "doc": "Function null call." },
+      { "name": "security_type", "type": "string", "doc": "Function security type." },
+      { "name": "specific_name", "type": "string", "doc": "Specific name of the function; Reserved for future use." },
+      { "name": "comment", "type": "string", "doc": "User-provided free-form text description." },
+      { "name": "properties", "type": "string", "doc": "JSON-serialized key-value pair map, encoded as a string." },
+      { "name": "full_name", "type": "string", "doc": "Full name of function in the form of catalog_name.schema_name.function_name." },
+      { "name": "owner", "type": "string", "doc": "Username of the current function owner." },
+      { "name": "created_at", "type": "long", "doc": "Time at which this function was created, in epoch milliseconds." },
+      { "name": "created_by", "type": "string", "doc": "Username of function creator." },
+      { "name": "updated_at", "type": "long", "doc": "Time at which this function was last updated, in epoch milliseconds." },
+      { "name": "updated_by", "type": "string", "doc": "Username of the user who last modified the function." },
+      { "name": "function_id", "type": "string", "doc": "ID of function, relative to parent schema." },
+      { "name": "external_language", "type": "string", "doc": "External language of the function." }
+    ]
+  }
+}
