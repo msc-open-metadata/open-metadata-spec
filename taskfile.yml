@@ -1,7 +1,18 @@
-version: '3'
+version: "3"
 
 tasks:
-  pre-commit:init:
+  init:
+    description: init repo
+    cmds:
+      - task: init:pre-commit
+      - task: install
+
+  install:
+    description: Install dependencies
+    cmds:
+      - uv sync
+
+  init:pre-commit:
     description: Install pre-commit hooks
     cmds:
       - uv add pre-commit --dev
