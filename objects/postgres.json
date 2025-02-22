@@ -112,15 +112,60 @@
       }
     ],
     "fields": [
-      { "name": "username", "type": ["string"], "doc": "The name of the user" },
-      { "name": "usesysid", "type": ["int"], "doc": "OID of this user" },
-      { "name": "usecreatedb", "type": ["boolean"], "doc": "User can create databases" },
-      { "name": "usesuper", "type": ["boolean"], "doc": "User is a superuser" },
-      { "name": "userepl", "type": ["boolean"], "doc": "User can initiate streaming replication and put the system in and out of backup mode" },
-      { "name": "usebypassrls", "type": ["boolean"], "doc": "User bypasses every row-level security policy" },
-      { "name": "passwd", "type": ["string"], "doc": "Not the password (always reads as ********)" },
-      { "name": "valuntil", "type": ["null", "string"], "doc": "Password expiry time (only used for password authentication)" },
-      { "name": "useconfig", "type": ["null", "array"], "items": "string", "default": "null", "doc": "Session defaults for run-time configuration variables" }
+      { "name": "oid", "type": ["int"], "doc": "Row identifier" },
+      { "name": "rolname", "type": ["string"], "doc": "Role name" },
+      { "name": "rolsuper", "type": ["boolean"], "doc": "Role has superuser privileges" },
+      { "name": "rolinherit", "type": ["boolean"], "doc": "Role automatically inherits privileges of roles it is a member of" },
+      { "name": "rolcreaterole", "type": ["boolean"], "doc": "Role can create more roles" },
+      { "name": "rolcreatedb", "type": ["boolean"], "doc": "Role can create databases" },
+      { "name": "rolcanlogin", "type": ["boolean"], "doc": "Role can log in. That is, this role can be given as the initial session authorization identifier." },
+      { "name": "rolreplication", "type": ["boolean"], "doc": "Role is a replication role. A replication role can initiate replication connections and create and drop replication slots." },
+      { "name": "rolbypassrls", "type": ["boolean"], "doc": "Role bypasses every row-level security policy, see Section 5.9 for more information." },
+      { "name": "rolconnlimit", "type": ["int"], "doc": "For roles that can log in, this sets maximum number of concurrent connections this role can make. -1 means no limit." },
+      { "name": "rolpassword", "type": ["string"], "doc": "Password (possibly encrypted); null if none. The format depends on the form of encryption used." },
+      { "name": "rolvaliduntil", "type": ["null", "string"], "doc": "Password expiry time (only used for password authentication); null if no expiration." }
+    ]
+  },
+  "Role": {
+    "tpe": ["record"],
+    "name": "Role",
+    "doc": "args: https://www.postgresql.org/docs/current/sql-createrole.html, fields: https://www.postgresql.org/docs/current/catalog-pg-authid.html",
+    "args": [
+      { "name": "name", "type": ["string"], "doc": "The name of the user." },
+      { "name": "superuser", "type": ["boolean"], "default": false, "doc": "Indicates if the user is a superuser." },
+      { "name": "createdb", "type": ["boolean"], "default": false, "doc": "Indicates if the user can create databases." },
+      { "name": "createrole", "type": ["boolean"], "default": false, "doc": "Indicates if the user can create other roles." },
+      { "name": "inherit", "type": ["boolean"], "default": true, "doc": "Indicates if the user inherits privileges." },
+      { "name": "login", "type": ["boolean"], "default": false, "doc": "Indicates if the user can log in." },
+      { "name": "replication", "type": ["boolean"], "default": false, "doc": "Indicates if the user can connect in replication mode." },
+      { "name": "bypassrls", "type": ["boolean"], "default": false, "doc": "Indicates if the role bypasses row-level security policies." },
+      { "name": "connection_limit", "type": ["int"], "default": -1, "doc": "The maximum number of concurrent connections for the role." },
+      { "name": "password", "type": ["null", "string"], "default": null, "doc": "The password for the user." },
+      { "name": "valid_until", "type": ["null", "string"], "default": null, "doc": "Expiration timestamp for the password." },
+      {
+        "name": "membership",
+        "type": ["null", "array"],
+        "default": null,
+        "doc": "Defines role memberships and their options.",
+        "items": [
+          { "name": "role_name", "type": ["string"], "doc": "Role name being granted." },
+          { "name": "option", "type": ["string"], "doc": "Membership option: IN ROLE, ROLE, ADMIN." }
+        ]
+      }
+    ],
+    "fields": [
+      { "name": "oid", "type": ["int"], "doc": "Row identifier" },
+      { "name": "rolname", "type": ["string"], "doc": "Role name" },
+      { "name": "rolsuper", "type": ["boolean"], "doc": "Role has superuser privileges" },
+      { "name": "rolinherit", "type": ["boolean"], "doc": "Role automatically inherits privileges of roles it is a member of" },
+      { "name": "rolcreaterole", "type": ["boolean"], "doc": "Role can create more roles" },
+      { "name": "rolcreatedb", "type": ["boolean"], "doc": "Role can create databases" },
+      { "name": "rolcanlogin", "type": ["boolean"], "doc": "Role can log in. That is, this role can be given as the initial session authorization identifier." },
+      { "name": "rolreplication", "type": ["boolean"], "doc": "Role is a replication role. A replication role can initiate replication connections and create and drop replication slots." },
+      { "name": "rolbypassrls", "type": ["boolean"], "doc": "Role bypasses every row-level security policy, see Section 5.9 for more information." },
+      { "name": "rolconnlimit", "type": ["int"], "doc": "For roles that can log in, this sets maximum number of concurrent connections this role can make. -1 means no limit." },
+      { "name": "rolpassword", "type": ["string"], "doc": "Password (possibly encrypted); null if none. The format depends on the form of encryption used." },
+      { "name": "rolvaliduntil", "type": ["null", "string"], "doc": "Password expiry time (only used for password authentication); null if no expiration." }
     ]
   }
 }
