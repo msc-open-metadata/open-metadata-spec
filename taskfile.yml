@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  pre-commit:init:
+    description: Install pre-commit hooks
+    cmds:
+      - uv add pre-commit --dev
+      - uv run pre-commit install --hook-type commit-msg
