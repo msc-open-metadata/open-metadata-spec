@@ -30,12 +30,7 @@
       { "name": "window", "type": ["boolean"], "default": false, "doc": "Indicates if the function is a window function." },
       { "name": "volatility", "type": ["enum"], "default": "VOLATILE", "doc": "The volatility of the function (IMMUTABLE, STABLE, VOLATILE)." },
       { "name": "leakproof", "type": ["string"], "default": "NOT", "doc": "Indicates if the function has side effects." },
-      {
-        "name": "null_input_behavior",
-        "type": ["enum"],
-        "default": "CALLED ON NULL INPUT",
-        "doc": "Behavior for NULL inputs (CALLED ON NULL INPUT, RETURNS NULL ON NULL INPUT, STRICT)."
-      },
+      { "name": "null_input_behavior", "type": ["enum"], "default": "CALLED ON NULL INPUT", "doc": "Behavior for NULL inputs (CALLED ON NULL INPUT, RETURNS NULL ON NULL INPUT, STRICT)." },
       { "name": "security", "type": ["enum"], "default": "SECURITY INVOKE", "doc": "Priveleges to execute with (SECURITY INVOKER, SECURITY DEFINER)." },
       { "name": "parallel", "type": ["enum"], "default": "PARALLEL UNSAFE", "doc": "Parallel execution safety (UNSAFE, RESTRICTED, SAFE)." },
       { "name": "execution_cost", "type": ["number"], "default": 1, "doc": "The estimated execution cost of the function." },
@@ -44,12 +39,12 @@
       {
         "name": "set_config",
         "type": ["null", "array"],
+        "default": "null",
+        "doc": "The name of the planner support function.",
         "items": [
           { "name": "parameter", "type": ["string"], "doc": "The configuration parameter to set." },
           { "name": "value", "type": ["string"], "doc": "The value for the configuration parameter." }
-        ],
-        "default": "null",
-        "doc": "The name of the planner support function."
+        ]
       },
       { "name": "definition", "type": ["null", "string"], "doc": "The function definition." },
       { "name": "object_file", "type": ["null", "string"], "default": "null", "doc": "The path to the object file for C functions." },
@@ -81,12 +76,7 @@
       { "name": "proargmodes", "type": ["null", "array"], "items": "string", "doc": "Argument modes" },
       { "name": "proargnames", "type": ["null", "array"], "items": "string", "doc": "Argument names" },
       { "name": "proargdefaults", "type": ["null", "string"], "doc": "Default values expression tree" },
-      {
-        "name": "protrftypes",
-        "type": ["null", "array"],
-        "items": "int",
-        "doc": "Transform argument/result type OIDs"
-      },
+      { "name": "protrftypes", "type": ["null", "array"], "items": "int", "doc": "Transform argument/result type OIDs" },
       { "name": "prosrc", "type": ["string"], "doc": "Function source code or identifier" },
       { "name": "probin", "type": ["null", "string"], "doc": "Additional execution info" },
       { "name": "prosqlbody", "type": ["null", "string"], "doc": "Pre-parsed SQL function body" },
@@ -114,11 +104,11 @@
         "name": "membership",
         "type": ["null", "array"],
         "default": null,
+        "doc": "Defines role memberships and their options.",
         "items": [
           { "name": "role_name", "type": ["string"], "doc": "Role name being granted." },
           { "name": "option", "type": ["string"], "doc": "Membership option: IN ROLE, ROLE, ADMIN." }
-        ],
-        "doc": "Defines role memberships and their options."
+        ]
       }
     ],
     "fields": [
