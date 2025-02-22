@@ -18,13 +18,7 @@
     "fields": [
       { "name": "name", "type": "string" },
       { "name": "updated_at", "type": ["null", "string"], "default": "null", "doc": "example" },
-      {
-        "name": "array_ex",
-        "type": ["null", "array"],
-        "items": "string",
-        "default": "null",
-        "doc": "The name of the planner support function."
-      }
+      { "name": "array_ex", "type": ["null", "array"], "items": "string", "default": "null", "doc": "The name of the planner support function." }
     ]
   }
 }

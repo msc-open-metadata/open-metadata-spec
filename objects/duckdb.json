@@ -1,69 +1,65 @@
 {
-
-    "udf":
-        {
-            "type": "record",
-            "name": "udf",
-            "args": [
-                { "name": "name", "type": ["string"], "doc":  "A string representing the unique name of the UDF within the connection catalog" },
-                { "name": "function", "type": ["string"], "doc": "The Python function you wish to register as a UDF." },
-                { "name": "parameters", "type": ["null", "string"], "doc": "Scalar functions can operate on one or more columns. This parameter takes a list of column types used as input."},
-                { "name": "return_type", "type": ["string"], "doc": "Scalar functions return one element per row. This parameter specifies the return type of the function."},
-                { "name": "type", "type":  ["null", "string"], "default": null, "doc": "(optional): DuckDB supports both built-in Python types and PyArrow Tables. By default, built-in types are assumed, but you can specify type = 'arrow' to use PyArrow Tables" },
-                { "name": "null_handling", "type": ["null", "string"], "default": null, "doc": " (optional): By default, NULL values are automatically handled as NULL-in NULL-out. Users can specify a desired behavior for NULL values by setting null_handling = 'special'."},
-                { "name": "exception_handling", "type": ["null", "string"], "default": null, "doc":"(optional): By default, when an exception is thrown from the Python function, it will be re-thrown in Python. Users can disable this behavior, and instead return NULL, by setting this parameter to 'return_null'" },
-                { "name": "side_effects", "type": ["null", "bool"], "default": null, "doc": " (optional): By default, functions are expected to produce the same result for the same input. If the result of a function is impacted by any type of randomness, side_effects must be set to True."}
-            ],
-            "fields": [
-                { "name": "database_name", "type": ["string"], "doc": "The name of the database that contains this function." },
-                { "name": "database_oid", "type": ["string"], "doc": "N/A" },
-                  { "name": "schema_name", "type": ["string"], "doc": "The SQL name of the schema where the function resides." },
-                  { "name": "function_name", "type": ["string"], "doc": "The SQL name of the function." },
-                  { "name": "function_type", "type": ["string"], "doc": "The function kind. Value is one of: table,scalar,aggregate,pragma,macro" },
-                { "name": "description", "type":  ["null", "string"], "default": null, "doc": "Description of this function"  },
-                { "name": "comment", "type":  ["null", "string"], "default": null, "doc": "N/A"  },
-                { "name": "tags", "type": ["map"], "items":"string", "doc": "N/A" },
-                { "name": "return_type", "type":  ["null", "string"], "default": null, "doc": "The logical data type name of the returned value. Applicable for scalar and aggregate functions."  },
-                { "name": "parameters", "type": ["string"], "doc": "If the function has parameters, the list of parameter names." },
-                { "name": "parameter_types", "type": ["string"], "doc": "If the function has parameters, a list of logical data type names corresponding to the parameter list." },
-                { "name": "varargs", "type":  ["null", "string"], "default": null, "doc":"The name of the data type in case the function has a variable number of arguments, or NULL if the function does not have a variable number of arguments."  },
-                { "name": "macro_definition", "type":  ["null", "string"], "default": null, "doc":"If this is a macro, the SQL expression that defines it."  },
-                { "name": "has_side_effects", "type": ["boolean"], "doc": "false if this is a pure function. true if this function changes the database state (like sequence functions nextval() and curval())." },
-                { "name": "internal", "type": ["boolean"], "doc": "N/A" },
-                  { "name": "function_oid", "type": ["string"], "doc":"The internal identifier for this function" },
-                { "name": "example", "type":  ["null", "string"], "default": null, "doc": "N/A" },
-                { "name": "stability", "type":  ["null", "string"], "default": null, "doc": "N/A" }
-            ]
-        },
-    "FUNCTION":
-        {
-            "type": ["record"],
-            "name": "function",
-            "args": [
-              {"name": "name", "type": ["string"], "doc": "name of the macro"},
-                {"name": "parameters", "type":  ["null", "string"], "default": null, "doc": "optionally parameters within a set of parentheses" },
-                {"name": "macro text", "type": ["string"], "doc": "the text of the macro (Carl note: after create macro... as..  - so the actual logic)"}
-            ],
-            "fields": [
-                { "name": "database_name", "type": ["string"], "doc": "The name of the database that contains this function." },
-                { "name": "database_oid", "type": ["string"], "doc": "N/A" },
-                  { "name": "schema_name", "type": ["string"], "doc": "The SQL name of the schema where the function resides." },
-                  { "name": "function_name", "type": ["string"], "doc": "The SQL name of the function." },
-                  { "name": "function_type", "type": ["string"], "doc": "The function kind. Value is one of: table,scalar,aggregate,pragma,macro" },
-                { "name": "description", "type":  ["null", "string"], "default": null, "doc": "Description of this function"  },
-                { "name": "comment", "type":  ["null", "string"], "default": null, "doc": "N/A"  },
-                { "name": "tags", "type": ["map"], "items":"string", "doc": "N/A" },
-                { "name": "return_type", "type":  ["null", "string"], "default": null, "doc": "The logical data type name of the returned value. Applicable for scalar and aggregate functions."  },
-                { "name": "parameters", "type": ["string"], "doc": "If the function has parameters, the list of parameter names." },
-                { "name": "parameter_types", "type": ["string"], "doc": "If the function has parameters, a list of logical data type names corresponding to the parameter list." },
-                { "name": "varargs", "type":  ["null", "string"], "default": null, "doc":"The name of the data type in case the function has a variable number of arguments, or NULL if the function does not have a variable number of arguments."  },
-                { "name": "macro_definition", "type":  ["null", "string"], "default": null, "doc":"If this is a macro, the SQL expression that defines it."  },
-                { "name": "has_side_effects", "type": ["boolean"], "doc": "false if this is a pure function. true if this function changes the database state (like sequence functions nextval() and curval())." },
-                { "name": "internal", "type": ["boolean"], "doc": "N/A" },
-                  { "name": "function_oid", "type": ["string"], "doc":"The internal identifier for this function" },
-                { "name": "example", "type":  ["null", "string"], "default": null, "doc": "N/A" },
-                { "name": "stability", "type":  ["null", "string"], "default": null, "doc": "N/A" }
-            ]
-        }
-
+  "udf": {
+    "type": "record",
+    "name": "udf",
+    "args": [
+      { "name": "name", "type": ["string"], "doc": "A string representing the unique name of the UDF within the connection catalog" },
+      { "name": "function", "type": ["string"], "doc": "The Python function you wish to register as a UDF." },
+      { "name": "parameters", "type": ["null", "string"], "doc": "Scalar functions can operate on one or more columns. This parameter takes a list of column types used as input." },
+      { "name": "return_type", "type": ["string"], "doc": "Scalar functions return one element per row. This parameter specifies the return type of the function." },
+      { "name": "type", "type": ["null", "string"], "default": null, "doc": "(optional): DuckDB supports both built-in Python types and PyArrow Tables. By default, built-in types are assumed, but you can specify type = 'arrow' to use PyArrow Tables" },
+      { "name": "null_handling", "type": ["null", "string"], "default": null, "doc": " (optional): By default, NULL values are automatically handled as NULL-in NULL-out. Users can specify a desired behavior for NULL values by setting null_handling = 'special'." },
+      { "name": "exception_handling", "type": ["null", "string"], "default": null, "doc": "(optional): By default, when an exception is thrown from the Python function, it will be re-thrown in Python. Users can disable this behavior, and instead return NULL, by setting this parameter to 'return_null'" },
+      { "name": "side_effects", "type": ["null", "bool"], "default": null, "doc": " (optional): By default, functions are expected to produce the same result for the same input. If the result of a function is impacted by any type of randomness, side_effects must be set to True." }
+    ],
+    "fields": [
+      { "name": "database_name", "type": ["string"], "doc": "The name of the database that contains this function." },
+      { "name": "database_oid", "type": ["string"], "doc": "N/A" },
+      { "name": "schema_name", "type": ["string"], "doc": "The SQL name of the schema where the function resides." },
+      { "name": "function_name", "type": ["string"], "doc": "The SQL name of the function." },
+      { "name": "function_type", "type": ["string"], "doc": "The function kind. Value is one of: table,scalar,aggregate,pragma,macro" },
+      { "name": "description", "type": ["null", "string"], "default": null, "doc": "Description of this function" },
+      { "name": "comment", "type": ["null", "string"], "default": null, "doc": "N/A" },
+      { "name": "tags", "type": ["map"], "items": "string", "doc": "N/A" },
+      { "name": "return_type", "type": ["null", "string"], "default": null, "doc": "The logical data type name of the returned value. Applicable for scalar and aggregate functions." },
+      { "name": "parameters", "type": ["string"], "doc": "If the function has parameters, the list of parameter names." },
+      { "name": "parameter_types", "type": ["string"], "doc": "If the function has parameters, a list of logical data type names corresponding to the parameter list." },
+      { "name": "varargs", "type": ["null", "string"], "default": null, "doc": "The name of the data type in case the function has a variable number of arguments, or NULL if the function does not have a variable number of arguments." },
+      { "name": "macro_definition", "type": ["null", "string"], "default": null, "doc": "If this is a macro, the SQL expression that defines it." },
+      { "name": "has_side_effects", "type": ["boolean"], "doc": "false if this is a pure function. true if this function changes the database state (like sequence functions nextval() and curval())." },
+      { "name": "internal", "type": ["boolean"], "doc": "N/A" },
+      { "name": "function_oid", "type": ["string"], "doc": "The internal identifier for this function" },
+      { "name": "example", "type": ["null", "string"], "default": null, "doc": "N/A" },
+      { "name": "stability", "type": ["null", "string"], "default": null, "doc": "N/A" }
+    ]
+  },
+  "FUNCTION": {
+    "type": ["record"],
+    "name": "function",
+    "args": [
+      { "name": "name", "type": ["string"], "doc": "name of the macro" },
+      { "name": "parameters", "type": ["null", "string"], "default": null, "doc": "optionally parameters within a set of parentheses" },
+      { "name": "macro text", "type": ["string"], "doc": "the text of the macro (Carl note: after create macro... as..  - so the actual logic)" }
+    ],
+    "fields": [
+      { "name": "database_name", "type": ["string"], "doc": "The name of the database that contains this function." },
+      { "name": "database_oid", "type": ["string"], "doc": "N/A" },
+      { "name": "schema_name", "type": ["string"], "doc": "The SQL name of the schema where the function resides." },
+      { "name": "function_name", "type": ["string"], "doc": "The SQL name of the function." },
+      { "name": "function_type", "type": ["string"], "doc": "The function kind. Value is one of: table,scalar,aggregate,pragma,macro" },
+      { "name": "description", "type": ["null", "string"], "default": null, "doc": "Description of this function" },
+      { "name": "comment", "type": ["null", "string"], "default": null, "doc": "N/A" },
+      { "name": "tags", "type": ["map"], "items": "string", "doc": "N/A" },
+      { "name": "return_type", "type": ["null", "string"], "default": null, "doc": "The logical data type name of the returned value. Applicable for scalar and aggregate functions." },
+      { "name": "parameters", "type": ["string"], "doc": "If the function has parameters, the list of parameter names." },
+      { "name": "parameter_types", "type": ["string"], "doc": "If the function has parameters, a list of logical data type names corresponding to the parameter list." },
+      { "name": "varargs", "type": ["null", "string"], "default": null, "doc": "The name of the data type in case the function has a variable number of arguments, or NULL if the function does not have a variable number of arguments." },
+      { "name": "macro_definition", "type": ["null", "string"], "default": null, "doc": "If this is a macro, the SQL expression that defines it." },
+      { "name": "has_side_effects", "type": ["boolean"], "doc": "false if this is a pure function. true if this function changes the database state (like sequence functions nextval() and curval())." },
+      { "name": "internal", "type": ["boolean"], "doc": "N/A" },
+      { "name": "function_oid", "type": ["string"], "doc": "The internal identifier for this function" },
+      { "name": "example", "type": ["null", "string"], "default": null, "doc": "N/A" },
+      { "name": "stability", "type": ["null", "string"], "default": null, "doc": "N/A" }
+    ]
+  }
 }

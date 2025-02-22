@@ -15,12 +15,7 @@
           { "name": "comment", "type": ["null", "string"], "default": "null", "doc": "Optional description." }
         ]
       },
-      {
-        "name": "returns_data_type",
-        "type": ["null", "string"],
-        "default": "null",
-        "doc": "The return data type of the function. For SQL optional. For Python required"
-      },
+      { "name": "returns_data_type", "type": ["null", "string"], "default": "null", "doc": "The return data type of the function. For SQL optional. For Python required" },
       {
         "name": "returns_table",
         "type": ["null", "array"],
@@ -35,12 +30,7 @@
       { "name": "definition", "type": ["null", "string"], "doc": "Defines the function body as an expression or query. SQL function" },
       { "name": "dollar_quoted_definition", "type": ["null", "string"], "doc": "Defines the function body as an expression or query. Python function" },
       { "name": "language", "type": ["enum"], "doc": "The language of the function implementation. SQL or PYTHON." },
-      {
-        "name": "deterministic",
-        "type": ["boolean"],
-        "default": "derived",
-        "doc": "Specifies whether the function always returns the same result for given inputs."
-      },
+      { "name": "deterministic", "type": ["boolean"], "default": "derived", "doc": "Specifies whether the function always returns the same result for given inputs." },
       { "name": "function_comment", "type": ["string"], "default": "", "doc": "Optional function description." },
       { "name": "sql_access", "type": ["enum"], "default": "derived", "doc": "Specifies if the function reads SQL data. CONTAINS SQL or READS SQL DATA" }
     ],
@@ -56,22 +46,10 @@
       { "name": "full_data_type", "type": ["string"], "doc": "The result data type definition, for example 'DECIMAL(10, 4)'." },
       { "name": "character_maximum_length", "type": ["null", "integer"], "default": "null", "doc": "Always NULL, reserved for future use." },
       { "name": "character_octet_length", "type": ["null", "string"], "default": "null", "doc": "Always NULL, reserved for future use." },
-      {
-        "name": "numeric_precision",
-        "type": ["null", "integer"],
-        "doc": "For base-2 integral numeric types, FLOAT, and DOUBLE, the number of supported bits. For DECIMAL the number of digits, NULL otherwise."
-      },
+      { "name": "numeric_precision", "type": ["null", "integer"], "doc": "For base-2 integral numeric types, FLOAT, and DOUBLE, the number of supported bits. For DECIMAL the number of digits, NULL otherwise." },
       { "name": "numeric_precision_radix", "type": ["null", "integer"], "doc": "For DECIMAL 10, for all other numeric types 2, NULL otherwise." },
-      {
-        "name": "numeric_scale",
-        "type": ["null", "integer"],
-        "doc": "For integral numeric types 0, for DECIMAL the number of digits to the right of the decimal point, NULL otherwise."
-      },
-      {
-        "name": "datetime_precision",
-        "type": ["null", "integer"],
-        "doc": "For DATE 0, for TIMESTAMP, and INTERVAL … SECOND 3, any other INTERVAL 0, NULL otherwise."
-      },
+      { "name": "numeric_scale", "type": ["null", "integer"], "doc": "For integral numeric types 0, for DECIMAL the number of digits to the right of the decimal point, NULL otherwise." },
+      { "name": "datetime_precision", "type": ["null", "integer"], "doc": "For DATE 0, for TIMESTAMP, and INTERVAL … SECOND 3, any other INTERVAL 0, NULL otherwise." },
       { "name": "interval_type", "type": ["null", "string"], "doc": "For INTERVAL the unit portion of the interval, e.g. 'YEAR TO MONTH', NULL otherwise." },
       { "name": "interval_precision", "type": ["null", "integer"], "doc": "Always NULL, reserved for future use." },
       { "name": "maximum_cardinality", "type": ["null", "integer"], "doc": "Always NULL, reserved for future use." },
