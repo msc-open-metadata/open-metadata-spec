@@ -16,9 +16,9 @@ class UnionSpec:
         *,
         req_args: dict[str, tuple[set[str], str, set[str]]],
         args: dict[str, tuple[set[str], str, set[str]]],
-        arg_repeats: defaultdict[str, set] = defaultdict(set[str]),
+        arg_repeats: defaultdict[str, set[str]],
         fields: dict[str, tuple[set[str], str, set[str]]],
-        field_repeats: defaultdict[str, set] = defaultdict(set[str]),
+        field_repeats: defaultdict[str, set[str]],
     ):
         self.obj = obj_name
         self.req_args = req_args
@@ -27,7 +27,7 @@ class UnionSpec:
         self.fields = fields
         self.field_repeats = field_repeats
 
-    def add_req_arg(self, name: str, type: set, doc: str, system: str) -> bool:
+    def add_req_arg(self, name: str, type: set[str], doc: str, system: str) -> bool:
         name = name.lower()
         if name in self.req_args:
             self.arg_repeats[name].add(self.obj)
@@ -37,7 +37,7 @@ class UnionSpec:
         self.req_args[name] = (type, doc, {system})
         return True
 
-    def add_arg(self, name: str, type: set, doc: str, system: str) -> bool:
+    def add_arg(self, name: str, type: set[str], doc: str, system: str) -> bool:
         name = name.lower()
         if name in self.args:
             self.arg_repeats[name].add(self.obj)
@@ -47,7 +47,7 @@ class UnionSpec:
         self.args[name] = (type, doc, {system})
         return True
 
-    def add_field(self, name: str, type: set, doc: str, system: str) -> bool:
+    def add_field(self, name: str, type: set[str], doc: str, system: str) -> bool:
         name = name.lower()
         if name in self.fields:
             self.field_repeats[name].add(self.obj)
@@ -95,7 +95,7 @@ class UnionSpec:
         {"Field Repeats":<25}: {len(self.field_repeats):>5} ({list(self.field_repeats.keys())[:3]}...)
         """
 
-    def export_definition(self, file_path: str) -> None:
+    def export_definition(self, file_path: str) -> None:  # noqa: C901
         serializable_req_args: dict[str, tuple[list[str], str, list[str]]] = {}
         serializable_args: dict[str, tuple[list[str], str, list[str]]] = {}
         serializable_fields: dict[str, tuple[list[str], str, list[str]]] = {}
@@ -129,9 +129,9 @@ class UnionSpec:
         self.field_repeats = dict(sorted(self.field_repeats.items()))
 
     def apply_heuristic(self, heuristic_path: str):
-        remove_req_a = set()
-        remove_opt_a = set()
-        remove_fields = set()
+        remove_req_a: set[str] = set()
+        remove_opt_a: set[str] = set()
+        remove_fields: set[str] = set()
 
         with open(heuristic_path) as f:
             heuristic: dict[str, dict] = json.load(f)
@@ -181,7 +181,9 @@ class UnionSpec:
 
 def union_spec(obj: MetadataObject, systems: set[str]):
     print("Producing object spec as union over:")
-    union_spec = UnionSpec("Function", req_args={}, args={}, fields={})
+    union_spec = UnionSpec(
+        "Function", req_args={}, args={}, fields={}, arg_repeats=defaultdict(set), field_repeats=defaultdict(set)
+    )
 
     for s in systems:
         with open(f"objects/{s}.json") as f:

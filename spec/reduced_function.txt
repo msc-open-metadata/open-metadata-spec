@@ -12,8 +12,8 @@
         ],
         "function_definition": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Defines the function body, either as an expression, query, or handler code.",
             [
@@ -26,8 +26,8 @@
             ],
             "Specifies the name of the function, optionally including schema and catalog.",
             [
-                "duckdb",
                 "snowflake",
+                "duckdb",
                 "postgres"
             ]
         ],
@@ -46,8 +46,8 @@
             ],
             "Specifies the implementation language of the function.",
             [
-                "postgres",
-                "databricks"
+                "databricks",
+                "postgres"
             ]
         ],
         "parameters": [
@@ -56,9 +56,9 @@
             ],
             "A list of the function's input parameters.",
             [
-                "postgres",
+                "databricks",
                 "unitycatalog",
-                "databricks"
+                "postgres"
             ]
         ],
         "ret_type": [
@@ -75,8 +75,8 @@
         "aggregate": [
             [
                 "l",
-                "n",
-                "u"
+                "u",
+                "n"
             ],
             "Specifies that the function is an aggregate function",
             [
@@ -94,8 +94,8 @@
         ],
         "arg_name": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Specify the name of the input argument.",
             [
@@ -105,8 +105,8 @@
         "copy grants": [
             [
                 "l",
-                "n",
-                "u"
+                "u",
+                "n"
             ],
             "Specifies to retain the access privileges from the original function when a new function is created using CREATE OR REPLACE FUNCTION.",
             [
@@ -115,8 +115,8 @@
         ],
         "default_value": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "To indicate that an argument is optional, use DEFAULT default_value to specify the default value of the argument. For the default value, you can use a literal or an expression.",
             [
@@ -157,15 +157,15 @@
             ],
             "An optional comment or description of the function.",
             [
-                "snowflake",
+                "databricks",
                 "unitycatalog",
-                "databricks"
+                "snowflake"
             ]
         ],
         "function_definition": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Defines the function body, either as an expression, query, or handler code.",
             [
@@ -178,8 +178,8 @@
             ],
             "Specifies the name of the function, optionally including schema and catalog.",
             [
-                "duckdb",
                 "snowflake",
+                "duckdb",
                 "postgres"
             ]
         ],
@@ -213,16 +213,16 @@
         ],
         "language": [
             [
+                "string",
                 "enum",
-                "null",
-                "string"
+                "null"
             ],
             "Specifies the implementation language of the function.",
             [
-                "postgres",
-                "snowflake",
                 "databricks",
-                "unitycatalog"
+                "snowflake",
+                "unitycatalog",
+                "postgres"
             ]
         ],
         "leakproof": [
@@ -236,8 +236,8 @@
         ],
         "link_symbol": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "The name of the function in the C language source code",
             [
@@ -247,8 +247,8 @@
         "null_handling": [
             [
                 "l",
-                "n",
-                "u"
+                "u",
+                "n"
             ],
             "Defines the behavior of the function when given NULL inputs.",
             [
@@ -257,8 +257,8 @@
         ],
         "object_file": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "The path to the object file for C functions.",
             [
@@ -286,15 +286,15 @@
         ],
         "parameters": [
             [
+                "string",
                 "array",
-                "null",
-                "string"
+                "null"
             ],
             "A list of the function's input parameters.",
             [
-                "duckdb",
-                "unitycatalog",
                 "databricks",
+                "unitycatalog",
+                "duckdb",
                 "postgres"
             ]
         ],
@@ -309,8 +309,8 @@
         ],
         "ret_type": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Defines the data type of return values.",
             [
@@ -329,8 +329,8 @@
         ],
         "runtime_version": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "runtime version to use",
             [
@@ -368,8 +368,8 @@
         ],
         "support_function": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "The name of the planner support function.",
             [
@@ -379,8 +379,8 @@
         "temp": [
             [
                 "l",
-                "n",
-                "u"
+                "u",
+                "n"
             ],
             "Specifies that the function persists only for the duration of the session that you created it in. A temporary function is dropped at the end of the session.",
             [
@@ -402,8 +402,8 @@
             ],
             "Indicates whether the function always returns the same result for given inputs. Is it pure",
             [
-                "postgres",
-                "snowflake"
+                "snowflake",
+                "postgres"
             ]
         ],
         "window": [
@@ -419,8 +419,8 @@
     "fields": {
         "api_integration": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -459,28 +459,28 @@
                 "integer",
                 "null"
             ],
-            "N/A",
+            "Always NULL, reserved for future use.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "character_octet_length": [
             [
                 "integer",
-                "null",
-                "string"
+                "string",
+                "null"
             ],
-            "N/A",
+            "Always NULL, reserved for future use.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "compression": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -489,8 +489,8 @@
         ],
         "context_headers": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -502,10 +502,10 @@
                 "datetime",
                 "timestamp"
             ],
-            "carl: a datetime",
+            "Timestamp when the routine was created.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "created_at": [
@@ -521,10 +521,10 @@
             [
                 "string"
             ],
-            "Username of function creator.",
+            "Principal which created the routine.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "database_name": [
@@ -557,8 +557,8 @@
         ],
         "description": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Description of this function",
             [
@@ -567,8 +567,8 @@
         ],
         "example": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -587,19 +587,19 @@
         ],
         "external_language": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
-            "External language of the function.",
+            "Always NULL, reserved for future use.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "external_name": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Always NULL, reserved for future use.",
             [
@@ -610,10 +610,10 @@
             [
                 "string"
             ],
-            "Pretty printed function data type.",
+            "The result data type definition, for example 'DECIMAL(10, 4)'.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "function_catalog": [
@@ -627,15 +627,15 @@
         ],
         "function_comment": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "An optional comment or description of the function.",
             [
-                "duckdb",
+                "databricks",
                 "unitycatalog",
-                "snowflake",
-                "databricks"
+                "duckdb",
+                "snowflake"
             ]
         ],
         "function_definition": [
@@ -740,8 +740,8 @@
         ],
         "installed_packages": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -769,8 +769,8 @@
         ],
         "interval_type": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "For INTERVAL the unit portion of the interval, e.g. 'YEAR TO MONTH', NULL otherwise.",
             [
@@ -800,10 +800,10 @@
                 "boolean",
                 "string"
             ],
-            "Whether the function is deterministic.",
+            "'YES' if routine defined as deterministic, 'NO' otherwise.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "is_external": [
@@ -829,11 +829,11 @@
                 "boolean",
                 "string"
             ],
-            "Function null call.",
+            "Always 'YES', reserved for future use.",
             [
-                "snowflake",
+                "databricks",
                 "unitycatalog",
-                "databricks"
+                "snowflake"
             ]
         ],
         "is_secure": [
@@ -850,10 +850,10 @@
                 "datetime",
                 "timestamp"
             ],
-            "carl: a datetime",
+            "Timestamp when the routine definition was last altered in any way.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "last_altered_by": [
@@ -867,8 +867,8 @@
         ],
         "macro_definition": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "If this is a macro, the SQL expression that defines it.",
             [
@@ -900,10 +900,10 @@
                 "integer",
                 "null"
             ],
-            "N/A",
+            "For base-2 integral numeric types, FLOAT, and DOUBLE, the number of supported bits. For DECIMAL the number of digits, NULL otherwise.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "numeric_precision_radix": [
@@ -911,10 +911,10 @@
                 "integer",
                 "null"
             ],
-            "N/A",
+            "For DECIMAL 10, for all other numeric types 2, NULL otherwise.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "numeric_scale": [
@@ -922,10 +922,10 @@
                 "integer",
                 "null"
             ],
-            "N/A",
+            "For integral numeric types 0, for DECIMAL the number of digits to the right of the decimal point, NULL otherwise.",
             [
-                "snowflake",
-                "databricks"
+                "databricks",
+                "snowflake"
             ]
         ],
         "oid": [
@@ -958,13 +958,13 @@
         ],
         "parameter_style": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
-            "Function parameter style. 'S' is the value for SQL.",
+            "'SQL', reserved for future use.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "parameter_types": [
@@ -982,8 +982,8 @@
             ],
             "A list of the function's input parameters.",
             [
-                "duckdb",
-                "unitycatalog"
+                "unitycatalog",
+                "duckdb"
             ]
         ],
         "proacl": [
@@ -1008,8 +1008,8 @@
         ],
         "proargdefaults": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Default values expression tree",
             [
@@ -1047,8 +1047,8 @@
         ],
         "probin": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Additional execution info",
             [
@@ -1211,8 +1211,8 @@
         ],
         "prosqlbody": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Pre-parsed SQL function body",
             [
@@ -1267,8 +1267,8 @@
         ],
         "request_translator": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -1277,8 +1277,8 @@
         ],
         "response_translator": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -1291,9 +1291,9 @@
             ],
             "Defines the data type of return values.",
             [
-                "snowflake",
+                "databricks",
                 "unitycatalog",
-                "databricks"
+                "snowflake"
             ]
         ],
         "return_params": [
@@ -1307,8 +1307,8 @@
         ],
         "return_type": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "The logical data type name of the returned value. Applicable for scalar and aggregate functions.",
             [
@@ -1319,10 +1319,10 @@
             [
                 "string"
             ],
-            "Function language. When EXTERNAL is used, specify external_language, and sql_data_access must be NO_SQL.",
+            "'SQL' or 'PYTHON'.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "routine_catalog": [
@@ -1336,13 +1336,13 @@
         ],
         "routine_definition": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
-            "Function body.",
+            "The full definition of the routine. NULL if the user is not the owner.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "routine_dependencies": [
@@ -1383,8 +1383,8 @@
         ],
         "runtime_version": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "runtime version to use",
             [
@@ -1395,10 +1395,10 @@
             [
                 "string"
             ],
-            "The SQL name of the schema where the function resides.",
+            "Name of parent schema relative to its parent catalog.",
             [
-                "duckdb",
-                "unitycatalog"
+                "unitycatalog",
+                "duckdb"
             ]
         ],
         "secrets": [
@@ -1415,10 +1415,10 @@
             [
                 "string"
             ],
-            "Function security type.",
+            "Always 'DEFINER', reserved for future use.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "specific_catalog": [
@@ -1434,10 +1434,10 @@
             [
                 "string"
             ],
-            "Specific name of the function; Reserved for future use.",
+            "Schema unique (specific) name of the routine.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "specific_schema": [
@@ -1453,16 +1453,16 @@
             [
                 "string"
             ],
-            "Function SQL data access.",
+            "'READS SQL DATA' if routine reads from a relation, 'CONTAINS SQL' otherwise.",
             [
-                "unitycatalog",
-                "databricks"
+                "databricks",
+                "unitycatalog"
             ]
         ],
         "sql_path": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "Always NULL, reserved for future use.",
             [
@@ -1471,8 +1471,8 @@
         ],
         "stability": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -1490,8 +1490,8 @@
         ],
         "target_path": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "N/A",
             [
@@ -1518,8 +1518,8 @@
         ],
         "varargs": [
             [
-                "null",
-                "string"
+                "string",
+                "null"
             ],
             "The name of the data type in case the function has a variable number of arguments, or NULL if the function does not have a variable number of arguments.",
             [
