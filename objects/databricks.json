@@ -8,6 +8,7 @@
       {
         "name": "parameters",
         "type": ["array"],
+        "doc": "Specifies the a parameters of the function.",
         "items": [
           { "name": "parameter_name", "type": ["string"], "doc": "The parameter name must be unique within the function." },
           { "name": "data_type", "type": ["string"], "doc": "Any supported data type." },

@@ -8,6 +8,7 @@
       {
         "name": "parameters",
         "type": ["array"],
+        "doc": "The arguments of the function.",
         "items": [
           { "name": "argmode", "type": ["null", "enum"], "default": "IN", "doc": "Argument mode: IN, OUT, INOUT, VARIADIC." },
           { "name": "argname", "type": ["string"], "doc": "Name of the argument." },
@@ -20,6 +21,7 @@
         "name": "return_table",
         "type": ["null", "array"],
         "default": ["null"],
+        "doc": "The optional schema of the return table given rettype SETOF",
         "items": [
           { "name": "column_name", "type": ["string"], "doc": "The name of the output column." },
           { "name": "column_type", "type": ["string"], "doc": "The data type of the output column." }
