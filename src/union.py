@@ -96,10 +96,9 @@ class UnionSpec:
         """
 
     def export_definition(self, file_path: str) -> None:
-
-        serializable_req_args : dict[str, tuple[list[str], str, list[str]]] = {}
-        serializable_args : dict[str, tuple[list[str], str, list[str]]] = {}
-        serializable_fields : dict[str, tuple[list[str], str, list[str]]] = {}
+        serializable_req_args: dict[str, tuple[list[str], str, list[str]]] = {}
+        serializable_args: dict[str, tuple[list[str], str, list[str]]] = {}
+        serializable_fields: dict[str, tuple[list[str], str, list[str]]] = {}
 
         for k, v in self.req_args.items():
             serializable_req_args[k] = (list(v[0]), v[1], list(v[2]))
@@ -141,13 +140,9 @@ class UnionSpec:
             for k, v in heuristic.items():
                 if req_a_name in v["aliases"]:
                     self.req_args[k] = (
-                        req_a_val[0]
-                        if self.req_args[req_a_name]
-                        else req_a_val[0] | self.req_args[req_a_name][0],
+                        req_a_val[0] if self.req_args[req_a_name] else req_a_val[0] | self.req_args[req_a_name][0],
                         v["description"],
-                        self.req_args[req_a_name][2] | req_a_val[2]
-                        if self.req_args[req_a_name]
-                        else req_a_val[2],
+                        self.req_args[req_a_name][2] | req_a_val[2] if self.req_args[req_a_name] else req_a_val[2],
                     )
                     self.arg_repeats[req_a_name] = set()
                     remove_req_a.add(req_a_name)
@@ -157,13 +152,9 @@ class UnionSpec:
             for k, v in heuristic.items():
                 if a_name in v["aliases"]:
                     self.args[k] = (
-                        a_val[0]
-                        if self.args[a_name]
-                        else a_val[0] | self.args[a_name][0],
+                        a_val[0] if self.args[a_name] else a_val[0] | self.args[a_name][0],
                         v["description"],
-                        self.args[a_name][2] | a_val[2]
-                        if self.args[a_name]
-                        else a_val[2],
+                        self.args[a_name][2] | a_val[2] if self.args[a_name] else a_val[2],
                     )
                     self.arg_repeats[a_name] = set()
                     remove_opt_a.add(a_name)
@@ -173,13 +164,9 @@ class UnionSpec:
             for k, v in heuristic.items():
                 if field_name in v["aliases"]:
                     self.fields[k] = (
-                        field_val[0]
-                        if self.fields[field_name]
-                        else field_val[0] | self.fields[field_name][0],
+                        field_val[0] if self.fields[field_name] else field_val[0] | self.fields[field_name][0],
                         v["description"],
-                        self.fields[field_name][2] | field_val[2]
-                        if self.fields[field_name]
-                        else field_val[2],
+                        self.fields[field_name][2] | field_val[2] if self.fields[field_name] else field_val[2],
                     )
                     self.field_repeats[field_name] = set()
                     remove_fields.add(field_name)
@@ -203,28 +190,20 @@ def union_spec(obj: MetadataObject, systems: set[str]):
             args = metadata_object["args"]
             req_args = [a for a in args if "default" not in a]
 
-        print(
-            f"   → {s}.{obj.name}. Required Args: {len(req_args)}. Fields: {len(fields)}"
-        )
+        print(f"   → {s}.{obj.name}. Required Args: {len(req_args)}. Fields: {len(fields)}")
 
         for a in args:
             try:
                 if "default" not in a:
-                    union_spec.add_req_arg(
-                        name=a["name"], type=set(a["type"]), doc=a["doc"], system=s
-                    )
-                union_spec.add_arg(
-                    name=a["name"], type=set(a["type"]), doc=a["doc"], system=s
-                )
+                    union_spec.add_req_arg(name=a["name"], type=set(a["type"]), doc=a["doc"], system=s)
+                union_spec.add_arg(name=a["name"], type=set(a["type"]), doc=a["doc"], system=s)
             except KeyError as e:
                 print(f" Error {e} {s}.{obj.name}.{a}. Missing key")
                 exit(1)
 
         for f in fields:
             try:
-                union_spec.add_field(
-                    name=f["name"], type=set(f["type"]), doc=f["doc"], system=s
-                )
+                union_spec.add_field(name=f["name"], type=set(f["type"]), doc=f["doc"], system=s)
             except KeyError as e:
                 print(f" Error {e} {s}.{obj.name}.{f}. Missing key")
                 exit(1)
