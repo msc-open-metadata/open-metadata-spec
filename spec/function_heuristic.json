@@ -1,0 +1,42 @@
+{
+  "function_definition": {
+    "aliases": ["def", "definition", "dollar_quoted_definition", "function_definition", "macro text", "sql_body"],
+    "description": "Defines the function body, either as an expression, query, or handler code."
+  },
+  "function_name": {
+    "aliases": ["full_name", "function_name", "name"],
+    "description": "Specifies the name of the function, optionally including schema and catalog."
+  },
+  "ret_type": {
+    "aliases": ["data_type", "returns", "rettype", "returns_data_type"],
+    "description": "Defines the data type of return values."
+  },
+  "parameters": {
+    "aliases": ["input_params", "parameters"],
+    "description": "A list of the function's input parameters."
+  },
+  "language": {
+    "aliases": ["lang_name", "language"],
+    "description": "Specifies the implementation language of the function."
+  },
+  "function_comment": {
+    "aliases": ["comment", "function_comment"],
+    "description": "An optional comment or description of the function."
+  },
+  "null_handling": {
+    "aliases": ["called on null input", "null_input_behavior", "returns null on null input"],
+    "description": "Defines the behavior of the function when given NULL inputs."
+  },
+  "return_table": {
+    "aliases": ["return_table", "returns_table"],
+    "description": "If non-null, specifies that the function returns a table of with the given schema"
+  },
+  "function_security": {
+    "aliases": ["secure", "security"],
+    "description": "Defines security settings for function execution, such as invoker/definer privileges."
+  },
+  "volatility": {
+    "aliases": ["immutable", "volatile", "volatility"],
+    "description": "Indicates whether the function always returns the same result for given inputs. Is it pure"
+  }
+}
