@@ -6,25 +6,56 @@ from enum import Enum
 class MetadataObject(Enum):
     FUNCTION = 1
     USER = 2
+    ROLE = 3
 
 
 class UnionSpec:
     def __init__(
         self,
-        obj: str,
+        obj_name: str,
         *,
-        req_args: dict[str, tuple[list, str]],
-        opt_args: dict[str, tuple[list, str]],
-        arg_repeats: defaultdict[str, set] = defaultdict(set),
-        fields: dict[str, tuple[list, str]],
-        field_repeats: defaultdict[str, set] = defaultdict(set),
+        req_args: dict[str, tuple[set[str], str, set[str]]],
+        args: dict[str, tuple[set[str], str, set[str]]],
+        arg_repeats: defaultdict[str, set] = defaultdict(set[str]),
+        fields: dict[str, tuple[set[str], str, set[str]]],
+        field_repeats: defaultdict[str, set] = defaultdict(set[str]),
     ):
-        self.obj = obj
+        self.obj = obj_name
         self.req_args = req_args
-        self.opt_args = opt_args
+        self.args = args
         self.arg_repeats = arg_repeats
         self.fields = fields
         self.field_repeats = field_repeats
+
+    def add_req_arg(self, name: str, type: set, doc: str, system: str) -> bool:
+        name = name.lower()
+        if name in self.req_args:
+            self.arg_repeats[name].add(self.obj)
+            self.req_args[name][0].update(type)
+            self.req_args[name][2].add(system)
+            return False
+        self.req_args[name] = (type, doc, {system})
+        return True
+
+    def add_arg(self, name: str, type: set, doc: str, system: str) -> bool:
+        name = name.lower()
+        if name in self.args:
+            self.arg_repeats[name].add(self.obj)
+            self.args[name][0].update(type)
+            self.args[name][2].add(system)
+            return False
+        self.args[name] = (type, doc, {system})
+        return True
+
+    def add_field(self, name: str, type: set, doc: str, system: str) -> bool:
+        name = name.lower()
+        if name in self.fields:
+            self.field_repeats[name].add(self.obj)
+            self.fields[name][0].update(type)
+            self.fields[name][2].add(system)
+            return False
+        self.fields[name] = (type, doc, {system})
+        return True
 
     def print_req_args(self):
         print(f"Required Args: {len(self.req_args)}")
@@ -32,9 +63,9 @@ class UnionSpec:
             print(f"""{k:<25}: {v[1]:>5}
                 """)
 
-    def print_opt_args(self):
-        print(f"Optional Args: {len(self.opt_args)}")
-        for k, v in self.opt_args.items():
+    def print_args(self):
+        print(f"All Args: {len(self.args)}")
+        for k, v in self.args.items():
             print(f"""{k:<25}: {v[1]:>5}
                 """)
 
@@ -58,66 +89,161 @@ class UnionSpec:
     def __str__(self):
         return f"""UnionSpec {self.obj}:
         {"Required Args":<25}: {len(self.req_args):>5} ({list(self.req_args.keys())[:3]}, and {len(self.req_args) - 3} more)
-        {"Optional Args":<25}: {len(self.opt_args):>5} ({list(self.opt_args.keys())[:3]}, and {len(self.opt_args) - 3} more)
+        {"All Args":<25}: {len(self.args):>5} ({list(self.args.keys())[:3]}, and {len(self.args) - 3} more)
         {"Fields":<25}: {len(self.fields):>5} ({list(self.fields.keys())[:3]}, and {len(self.fields) - 3} more)
         {"Arg Repeats":<25}: {len(self.arg_repeats):>5} ({list(self.arg_repeats.keys())[:3]}...)
         {"Field Repeats":<25}: {len(self.field_repeats):>5} ({list(self.field_repeats.keys())[:3]}...)
         """
 
+    def export_definition(self, file_path: str) -> None:
+
+        serializable_req_args : dict[str, tuple[list[str], str, list[str]]] = {}
+        serializable_args : dict[str, tuple[list[str], str, list[str]]] = {}
+        serializable_fields : dict[str, tuple[list[str], str, list[str]]] = {}
+
+        for k, v in self.req_args.items():
+            serializable_req_args[k] = (list(v[0]), v[1], list(v[2]))
+
+        for k, v in self.args.items():
+            serializable_args[k] = (list(v[0]), v[1], list(v[2]))
+
+        for k, v in self.fields.items():
+            serializable_fields[k] = (list(v[0]), v[1], list(v[2]))
+
+        with open(file_path, "w+") as f:
+            json.dump(
+                {
+                    "object": self.obj,
+                    "required_args": serializable_req_args,
+                    "all_args": serializable_args,
+                    "fields": serializable_fields,
+                },
+                f,
+                indent=4,
+            )
+
     def sort(self):
         self.req_args = dict(sorted(self.req_args.items()))
-        self.opt_args = dict(sorted(self.opt_args.items()))
+        self.args = dict(sorted(self.args.items()))
         self.fields = dict(sorted(self.fields.items()))
         self.arg_repeats = dict(sorted(self.arg_repeats.items()))
         self.field_repeats = dict(sorted(self.field_repeats.items()))
 
+    def apply_heuristic(self, heuristic_path: str):
+        remove_req_a = set()
+        remove_opt_a = set()
+        remove_fields = set()
+
+        with open(heuristic_path) as f:
+            heuristic: dict[str, dict] = json.load(f)
+
+        for req_a_name, req_a_val in self.req_args.copy().items():
+            for k, v in heuristic.items():
+                if req_a_name in v["aliases"]:
+                    self.req_args[k] = (
+                        req_a_val[0]
+                        if self.req_args[req_a_name]
+                        else req_a_val[0] | self.req_args[req_a_name][0],
+                        v["description"],
+                        self.req_args[req_a_name][2] | req_a_val[2]
+                        if self.req_args[req_a_name]
+                        else req_a_val[2],
+                    )
+                    self.arg_repeats[req_a_name] = set()
+                    remove_req_a.add(req_a_name)
+                    break
+
+        for a_name, a_val in self.args.copy().items():
+            for k, v in heuristic.items():
+                if a_name in v["aliases"]:
+                    self.args[k] = (
+                        a_val[0]
+                        if self.args[a_name]
+                        else a_val[0] | self.args[a_name][0],
+                        v["description"],
+                        self.args[a_name][2] | a_val[2]
+                        if self.args[a_name]
+                        else a_val[2],
+                    )
+                    self.arg_repeats[a_name] = set()
+                    remove_opt_a.add(a_name)
+                    break
+
+        for field_name, field_val in self.fields.copy().items():
+            for k, v in heuristic.items():
+                if field_name in v["aliases"]:
+                    self.fields[k] = (
+                        field_val[0]
+                        if self.fields[field_name]
+                        else field_val[0] | self.fields[field_name][0],
+                        v["description"],
+                        self.fields[field_name][2] | field_val[2]
+                        if self.fields[field_name]
+                        else field_val[2],
+                    )
+                    self.field_repeats[field_name] = set()
+                    remove_fields.add(field_name)
+                    break
+
+        [self.req_args.pop(k) for k in remove_req_a if k not in heuristic.keys()]
+        [self.args.pop(k) for k in remove_opt_a if k not in heuristic.keys()]
+        [self.fields.pop(k) for k in remove_fields if k not in heuristic.keys()]
+
+        self.sort()
+
 
 def union_spec(obj: MetadataObject, systems: set[str]):
     print("Producing object spec as union over:")
-    union_spec = UnionSpec("Function", req_args=dict(), opt_args=dict(), fields=dict())
+    union_spec = UnionSpec("Function", req_args={}, args={}, fields={})
 
     for s in systems:
         with open(f"objects/{s}.json") as f:
             metadata_object = json.load(f)[f"{obj.name}"]
-
-        fields = metadata_object["fields"]
-        args = metadata_object["args"]
-        req_args = [a for a in args if "default" not in a]
+            fields = metadata_object["fields"]
+            args = metadata_object["args"]
+            req_args = [a for a in args if "default" not in a]
 
         print(
             f"   → {s}.{obj.name}. Required Args: {len(req_args)}. Fields: {len(fields)}"
         )
-        for a in req_args:
-            try:
-                union_spec.req_args[a["name"]] = (a["type"], a["doc"])
-            except KeyError:
-                union_spec.arg_repeats[a["name"]].add(s)
+
         for a in args:
             try:
-                if "default" in a:
-                    union_spec.opt_args[a["name"]] = (a["type"], a["doc"])
-            except KeyError:
-                union_spec.arg_repeats[a["name"]].add(s)
+                if "default" not in a:
+                    union_spec.add_req_arg(
+                        name=a["name"], type=set(a["type"]), doc=a["doc"], system=s
+                    )
+                union_spec.add_arg(
+                    name=a["name"], type=set(a["type"]), doc=a["doc"], system=s
+                )
+            except KeyError as e:
+                print(f" Error {e} {s}.{obj.name}.{a}. Missing key")
+                exit(1)
 
         for f in fields:
             try:
-                union_spec.fields[f["name"]] = (f["type"], f["doc"])
-            except KeyError:
-                union_spec.field_repeats[f["name"]].add(s)
+                union_spec.add_field(
+                    name=f["name"], type=set(f["type"]), doc=f["doc"], system=s
+                )
+            except KeyError as e:
+                print(f" Error {e} {s}.{obj.name}.{f}. Missing key")
+                exit(1)
 
     union_spec.sort()
-
     return union_spec
+
+
+# Matching heuristic
 
 
 if __name__ == "__main__":
     function_systems = {"databricks", "duckdb", "postgres", "unitycatalog", "snowflake"}
     function_spec = union_spec(MetadataObject.FUNCTION, function_systems)
 
-    function_spec.print_req_args()
+    function_spec.export_definition("spec/function.txt")
+    print(function_spec)
 
-    function_spec.print_opt_args()
-
-    function_spec.print_fields()
+    function_spec.apply_heuristic("spec/function_heuristic.json")
+    function_spec.export_definition("spec/reduced_function.txt")
 
     print(function_spec)
