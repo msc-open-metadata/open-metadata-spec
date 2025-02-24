@@ -27,34 +27,37 @@ class UnionSpec:
         self.fields = fields
         self.field_repeats = field_repeats
 
-    def add_req_arg(self, name: str, type: set[str], doc: str, system: str) -> bool:
+    def add_req_arg(self, name: str, type: set[str], doc: str, system: set[str]) -> bool:
         name = name.lower()
         if name in self.req_args:
+            self.arg_repeats.setdefault(name, set())
             self.arg_repeats[name].add(self.obj)
             self.req_args[name][0].update(type)
-            self.req_args[name][2].add(system)
+            self.req_args[name][2].update(system)
             return False
-        self.req_args[name] = (type, doc, {system})
+        self.req_args[name] = (type, doc, system)
         return True
 
-    def add_arg(self, name: str, type: set[str], doc: str, system: str) -> bool:
+    def add_arg(self, name: str, type: set[str], doc: str, system: set[str]) -> bool:
         name = name.lower()
         if name in self.args:
+            self.arg_repeats.setdefault(name, set())
             self.arg_repeats[name].add(self.obj)
             self.args[name][0].update(type)
-            self.args[name][2].add(system)
+            self.args[name][2].update(system)
             return False
-        self.args[name] = (type, doc, {system})
+        self.args[name] = (type, doc, system)
         return True
 
-    def add_field(self, name: str, type: set[str], doc: str, system: str) -> bool:
+    def add_field(self, name: str, type: set[str], doc: str, system: set[str]) -> bool:
         name = name.lower()
         if name in self.fields:
+            self.field_repeats.setdefault(name, set())
             self.field_repeats[name].add(self.obj)
             self.fields[name][0].update(type)
-            self.fields[name][2].add(system)
+            self.fields[name][2].update(system)
             return False
-        self.fields[name] = (type, doc, {system})
+        self.fields[name] = (type, doc, system)
         return True
 
     def print_req_args(self):
@@ -139,10 +142,11 @@ class UnionSpec:
         for req_a_name, req_a_val in self.req_args.copy().items():
             for k, v in heuristic.items():
                 if req_a_name in v["aliases"]:
-                    self.req_args[k] = (
-                        req_a_val[0] if self.req_args[req_a_name] else req_a_val[0] | self.req_args[req_a_name][0],
-                        v["description"],
-                        self.req_args[req_a_name][2] | req_a_val[2] if self.req_args[req_a_name] else req_a_val[2],
+                    self.add_req_arg(
+                        name=k,
+                        type=req_a_val[0] if self.req_args[req_a_name] else req_a_val[0] | self.req_args[req_a_name][0],
+                        doc=v["description"],
+                        system=req_a_val[2],
                     )
                     self.arg_repeats[req_a_name] = set()
                     remove_req_a.add(req_a_name)
@@ -151,10 +155,11 @@ class UnionSpec:
         for a_name, a_val in self.args.copy().items():
             for k, v in heuristic.items():
                 if a_name in v["aliases"]:
-                    self.args[k] = (
-                        a_val[0] if self.args[a_name] else a_val[0] | self.args[a_name][0],
-                        v["description"],
-                        self.args[a_name][2] | a_val[2] if self.args[a_name] else a_val[2],
+                    self.add_arg(
+                        name=k,
+                        type=a_val[0] if self.args[a_name] else a_val[0] | self.args[a_name][0],
+                        doc=v["description"],
+                        system=a_val[2],
                     )
                     self.arg_repeats[a_name] = set()
                     remove_opt_a.add(a_name)
@@ -163,10 +168,11 @@ class UnionSpec:
         for field_name, field_val in self.fields.copy().items():
             for k, v in heuristic.items():
                 if field_name in v["aliases"]:
-                    self.fields[k] = (
-                        field_val[0] if self.fields[field_name] else field_val[0] | self.fields[field_name][0],
-                        v["description"],
-                        self.fields[field_name][2] | field_val[2] if self.fields[field_name] else field_val[2],
+                    self.add_field(
+                        name=k,
+                        type=field_val[0] if self.fields[field_name] else field_val[0] | self.fields[field_name][0],
+                        doc=v["description"],
+                        system=field_val[2],
                     )
                     self.field_repeats[field_name] = set()
                     remove_fields.add(field_name)
@@ -182,7 +188,12 @@ class UnionSpec:
 def union_spec(obj: MetadataObject, systems: set[str]):
     print("Producing object spec as union over:")
     union_spec = UnionSpec(
-        "Function", req_args={}, args={}, fields={}, arg_repeats=defaultdict(set), field_repeats=defaultdict(set)
+        "Function",
+        req_args={},
+        args={},
+        fields={},
+        arg_repeats=defaultdict(lambda: set()),
+        field_repeats=defaultdict(lambda: set()),
     )
 
     for s in systems:
@@ -197,15 +208,15 @@ def union_spec(obj: MetadataObject, systems: set[str]):
         for a in args:
             try:
                 if "default" not in a:
-                    union_spec.add_req_arg(name=a["name"], type=set(a["type"]), doc=a["doc"], system=s)
-                union_spec.add_arg(name=a["name"], type=set(a["type"]), doc=a["doc"], system=s)
+                    union_spec.add_req_arg(name=a["name"], type=set(a["type"]), doc=a["doc"], system={s})
+                union_spec.add_arg(name=a["name"], type=set(a["type"]), doc=a["doc"], system={s})
             except KeyError as e:
                 print(f" Error {e} {s}.{obj.name}.{a}. Missing key")
                 exit(1)
 
         for f in fields:
             try:
-                union_spec.add_field(name=f["name"], type=set(f["type"]), doc=f["doc"], system=s)
+                union_spec.add_field(name=f["name"], type=set(f["type"]), doc=f["doc"], system={s})
             except KeyError as e:
                 print(f" Error {e} {s}.{obj.name}.{f}. Missing key")
                 exit(1)
