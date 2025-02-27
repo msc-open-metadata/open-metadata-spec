@@ -185,7 +185,7 @@ class UnionSpec:
         self.sort()
 
 
-def union_spec(obj: MetadataObject, systems: set[str]):
+def union_spec(obj: MetadataObject, systems: set[str], include_fields: bool = False):
     print("Producing object spec as union over:")
     union_spec = UnionSpec(
         "Function",
@@ -199,7 +199,7 @@ def union_spec(obj: MetadataObject, systems: set[str]):
     for s in systems:
         with open(f"objects/{s}.json") as f:
             metadata_object = json.load(f)[f"{obj.name}"]
-            fields = metadata_object["fields"]
+            fields = metadata_object["fields"] if include_fields else []
             args = metadata_object["args"]
             req_args = [a for a in args if "default" not in a]
 
@@ -213,7 +213,6 @@ def union_spec(obj: MetadataObject, systems: set[str]):
             except KeyError as e:
                 print(f" Error {e} {s}.{obj.name}.{a}. Missing key")
                 exit(1)
-
         for f in fields:
             try:
                 union_spec.add_field(name=f["name"], type=set(f["type"]), doc=f["doc"], system={s})
@@ -229,7 +228,7 @@ def union_spec(obj: MetadataObject, systems: set[str]):
 
 
 if __name__ == "__main__":
-    function_systems = {"databricks", "duckdb", "postgres", "unitycatalog", "snowflake"}
+    function_systems = {"snowflake", "duckdb"}
     function_spec = union_spec(MetadataObject.FUNCTION, function_systems)
 
     function_spec.export_definition("spec/function.txt")
