@@ -1,0 +1,15 @@
+{
+    "FUNCTION":{
+        "type": "record",
+        "name": "Function",
+        "doc": "arg src: https://spark.apache.org/docs/3.5.1/sql-ref-syntax-ddl-create-function.html",
+        "args": [
+            {"name":"function_name", "type":["string"], "doc": "Specifies a name of function to be created. The function name may be optionally qualified with a database name."},
+            {"name":"class_name", "type":["string"], "doc": "Specifies the name of the class that provides the implementation for function to be created."},
+            {"name": "resource_locations", "type":["string", null], "doc":"Specifies the list of resources that contain the implementation of the function along with its dependencies."}
+        ]
+
+    }
+
+
+}
